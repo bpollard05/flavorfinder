@@ -1,6 +1,7 @@
 # README.md
 
 ## Link to video: https://youtu.be/yFy4a9K_LSw
+## Everything is in github repo: https://github.com/bpollard05/flavorfinder
 
 ## FlavorFinder: Recipe Search and Discovery Platform
 FlavorFinder is an intuitive web application that allows users to search and discover recipes based on ingredients they already have, dietary restrictions, and available kitchen equipment. The platform provides personalized recipe filtering to ensure users find the most suitable recipes with minimal effort.
@@ -26,36 +27,28 @@ This platform was designed with users’ convenience and functionality in mind. 
 
 ### Installation
 
-1. Download the zip file
+Clone the repository
 
-Then execute
+1. git clone https://github.com/bpollard05/flavorfinder.git
 
-2. unzip flavorfinder.zip
-
-Than, we can remove the .zip file since it is not needed anymore
-
-3. rm flavorfinder.zip
-
-then cd into the folder
-
-4. cd project
+2. cd flavorfinder
 
 Create a new virtual environment
 
-5. python3 -m venv venv
+3. python3 -m venv venv
 
 Activate the virtual environment
 
-6. source venv/bin/activate  # Mac/Linux
+4. source venv/bin/activate  # Mac/Linux
 venv\Scripts\activate  # Windows
  
 Install the requirements.txt file:
 
-7. pip install -r requirements.txt
+5. pip install -r requirements.txt
 
 **Run the Application:**
 
-8. flask run
+6. flask run
    - The website will be accessible at `http://127.0.0.1:5000/`.
 
 The use of a virtual environment was to ensures that all dependencies for FlavorFinder are isolated from your system’s global Python installation. This ensures there are no conflicts with other Python projects or system-wide packages. By activating the virtual environment and using the provided requirements.txt file, you guarantee that the application runs with the exact dependencies it was designed to use, ensuring consistent behavior and easier troubleshooting.

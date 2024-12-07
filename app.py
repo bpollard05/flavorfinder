@@ -273,6 +273,10 @@ def filter_view():
     """View and save ingredient filters, dietary restrictions, and unavailable equipment."""
     user_id = session["user_id"]
 
+    # Predefined valid options
+    VALID_DIETARY_RESTRICTIONS = ["vegetarian", "vegan", "gluten-free", "nut-free", "dairy-free"]
+    VALID_EQUIPMENT = ["oven", "stove", "microwave", "blender"]
+
     if request.method == "POST":
         action = request.form.get("action")
         if action == "clear":
@@ -322,6 +326,20 @@ def filter_view():
                 except ValueError as e:
                     logging.warning(f"Failed to normalize filter: {ingredient}, {amount}, {unit}. Error: {e}")
                     continue
+            
+            # Validate dietary restrictions
+            dietary_restrictions = request.form.getlist("dietary_restrictions")
+            invalid_dietary = [restriction for restriction in dietary_restrictions if restriction not in VALID_DIETARY_RESTRICTIONS]
+            if invalid_dietary:
+                flash(f"Invalid dietary restrictions: {', '.join(invalid_dietary)}", "error")
+                return redirect(url_for("filter_view"))
+
+            # Validate unavailable equipment
+            unavailable_equipment = request.form.getlist("unavailable_equipment")
+            invalid_equipment = [equipment for equipment in unavailable_equipment if equipment not in VALID_EQUIPMENT]
+            if invalid_equipment:
+                flash(f"Invalid equipment preferences: {', '.join(invalid_equipment)}", "error")
+                return redirect(url_for("filter_view"))
 
             # Save filters and normalized filters in the database
             try:
@@ -335,8 +353,8 @@ def filter_view():
                         (
                             json.dumps(filters),
                             json.dumps(normalized_filters),
-                            json.dumps(request.form.getlist("dietary_restrictions")),
-                            json.dumps(request.form.getlist("unavailable_equipment")),
+                            json.dumps(dietary_restrictions),
+                            json.dumps(unavailable_equipment),
                             user_id,
                         ),
                     )
