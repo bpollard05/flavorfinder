@@ -1,0 +1,611 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem 0;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Font for title */
+#flavorFinder-container {
+    text-align: center; /* Center the text */
+    margin-top: 20px; /* Add space above */
+    padding: 20px; /* Add padding around the section */
+}
+
+#flavorFinder-container h1 {
+    font-family: 'Arial', sans-serif; /* Simplify "Welcome to" font */
+    font-size: 2.5rem;    
+    color: #333; /* Neutral text color */
+}
+
+#flavorFinder {
+    font-family: 'Dancing Script', cursive; /* Apply cursive font */
+    font-size: 3rem; /* Larger size for emphasis */
+    color: #FF6347; /* Use a vibrant color */
+    display: inline-block; /* Ensure it aligns inline */
+    margin-left: 5px; /* Add slight spacing */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    font-weight: bold; /* Add bold weight */
+}
+
+/* Page Layout */
+.container {
+    margin-top: 2rem;
+    max-width: 1200px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+h3 {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+/* Header Styles */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand img {
+    height: 80px;
+    width: auto;
+    margin: 0;
+    display: block;
+    border-radius: 5px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    text-decoration: none;
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link.active {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.card.recipe {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+    width: 100%;
+    margin: 0;
+}
+
+.card.recipe:hover {
+    transform: scale(1.02);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.card-title a {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.card-title a:hover {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+/* Recipe Styles */
+.recipe-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+.recipe-detail {
+    padding: 2rem;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ingredients-section {
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.ingredients-grid .list-group-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.list-group-item i {
+    font-size: 1.2rem;
+    color: #4CAF50;
+}
+
+.instructions-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+.instructions-section p {
+    margin-bottom: 1rem;
+}
+
+/* Search Styles */
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+    accent-color: #4CAF50;
+}
+
+.checkbox-group label:hover {
+    background-color: #eaeaea;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #4CAF50;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #e63946;
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+    padding: 0.5rem 0.5rem;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.btn-danger:hover {
+    background-color: #d62828;
+}
+
+/* Form Styles */
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.input-group-text {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.input-group .form-control {
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+}
+
+.btn-block {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Centering the ingredient filters container */
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the container horizontally */
+    justify-content: center; /* Centers the container vertically */
+    padding: 20px;
+    max-width: 700px; /* Adjust the width as necessary */
+    margin: 0 auto; /* Center the container on the page */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling each filter row */
+.filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out items evenly */
+    width: 100%; /* Make the row span the container width */
+    padding: 10px;
+    margin-bottom: 10px; /* Space between rows */
+    background-color: #f9f9f9; /* Light background for rows */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Center-align labels and inputs */
+.filter-row .form-label {
+    text-align: left; /* Align labels to the left */
+    font-weight: bold;
+}
+
+/* Style inputs and dropdowns */
+.filter-row input,
+.filter-row select {
+    width: 100%; /* Ensure they take full width of their column */
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Add button spacing and alignment */
+#add-filter {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Add gap between text and icon */
+}
+
+/* Add space between text and icon */
+#add-filter i {
+    margin-left: 0; /* Reset margin */
+}
+
+/* Style for the trash icon */
+.remove-filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff4d4f; /* Red background for delete button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-filter:hover {
+    background-color: #ff3333; /* Darker red on hover */
+}
+
+/* Ensure each ingredient box spans the entire container */
+.ingredients-grid .list-group-item {
+    width: 100%; /* Span the entire container width */
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+/* Aligning the "Add Ingredient" button */
+#add-filter {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#add-filter:hover {
+    background-color: #5a6268; /* Slightly darker on hover */
+}
+
+.favorite-star i {
+    color: #ffc107; /* Yellow color */
+    cursor: pointer;
+    transition: color 0.2s ease; /* Smooth transition for hover effect */
+    font-size: 1.2rem;
+}
+
+.favorite-star i:hover {
+    color: #ffeb3b; /* Slightly brighter yellow on hover */
+}
+
+.large-title-card {
+    font-size: 1.8rem; /* Increase the font size */
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    line-height: 1.5; /* Adjust line height for better readability */
+}
+
+.custom-checkbox {
+    display: none;
+}
+
+/* Create a custom checkbox design */
+.custom-checkbox + .custom-checkbox-label {
+    position: relative;
+    padding-left: 30px; /* Add space for the custom checkbox */
+    cursor: pointer;
+    line-height: 1.5;
+    font-size: 1rem;
+    color: #333;
+    user-select: none;
+}
+
+/* Add the custom checkbox visual */
+.custom-checkbox + .custom-checkbox-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Add the checkmark when the checkbox is checked */
+.custom-checkbox:checked + .custom-checkbox-label::before {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"%3E%3Cpath d="M20.285 6.708a1 1 0 010 1.414l-10 10a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L9 15.585l9.293-9.293a1 1 0 011.414 0z"%3E%3C/path%3E%3C/svg%3E');
+    background-size: 14px 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Add hover effect */
+.custom-checkbox + .custom-checkbox-label:hover::before {
+    border-color: #4CAF50;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.flash-messages {
+    margin: 20px 0;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .filters-container {
+        padding: 1rem;
+    }
+
+    .instructions-section {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    img {
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 15px;
+    }
+    .filter-row {
+        grid-template-columns: 1fr; /* Stack columns vertically on small screens */
+        gap: 10px;
+    }
+
+    .filter-row .remove-filter {
+        width: 100%; /* Make the trash button span full width */
+        justify-content: center; /* Center-align the icon */
+    }
+}
+
+@media (max-width: 1000px) {
+    .navbar-nav {
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link {
+        text-align: center;
+        padding: 10px;
+    }
+}

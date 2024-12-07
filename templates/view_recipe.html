@@ -1,0 +1,86 @@
+{% extends "template.html" %}
+
+{% block title %}
+{{ recipe.Title }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <!-- Recipe Title -->
+        <h1 class="card-title large-title-card text-center mb-4 display-4">{{ recipe.Title }}</h1>
+        <!-- Favorite Star Icon -->
+        {% if user %}
+            {% if recipe.id in user_favorites %}
+                <span class="favorite-star position-absolute top-0 end-0 m-2">
+                    <i class="fas fa-star text-warning favorite-toggle" data-recipe-id="{{ recipe.id }}"></i>
+                </span>
+            {% else %}
+                <span class="favorite-star position-absolute top-0 end-0 m-2">
+                    <i class="far fa-star favorite-toggle" data-recipe-id="{{ recipe.id }}"></i>
+                </span>
+            {% endif %}
+        {% endif %}
+        <!-- Recipe Image -->
+        <div class="text-center mb-5">
+            {% if recipe.Image_Name %}
+                <img src="/static/images/{{ recipe.Image_Name }}.jpg" 
+                     class="img-fluid rounded shadow-lg border" 
+                     alt="{{ recipe.Title }}"
+                     style="max-width: 100%; height: auto; max-height: 500px;">
+            {% else %}
+                <img src="/static/images/placeholder.jpg" 
+                     class="img-fluid rounded shadow-lg border" 
+                     alt="Placeholder Image"
+                     style="max-width: 100%; height: auto; max-height: 500px;">
+            {% endif %}
+        </div>
+
+        <!-- Ingredients Section -->
+        <div class="ingredients-section">
+            <h3 class="mb-4 text-orange text-primary font-weight-bold text-center">INGREDIENTS:</h3>
+            <div class="row">
+                {% for ingredient in ingredients %}
+                    <div class="col-md-4 col-lg-4 mb-3">
+                        <ul class="list-group border-0">
+                            <li class="list-group-item d-flex align-items-center border-0 bg-transparent">
+                                <input type="checkbox" 
+                                       id="ingredient-{{ loop.index }}" 
+                                       class="form-check-input custom-checkbox"
+                                       data-ingredient="{{ ingredient }}">
+                                <label for="ingredient-{{ loop.index }}" class="form-check-label custom-checkbox-label">
+                                    {{ ingredient }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Instructions Section -->
+        <div class="instructions-section mt-5">
+            <h3 class="mb-4 text-orange text-primary font-weight-bold text-center">INSTRUCTIONS:</h3>
+            <div class="p-4 bg-light rounded shadow-sm border">
+                {% for step in recipe.Instructions.split('. ') %}
+                    <div class="form-check mb-3">
+                        <input type="checkbox" 
+                               id="instruction-{{ loop.index }}" 
+                               class="form-check-input custom-checkbox"
+                               data-step-index="{{ loop.index }}">
+                        <label for="instruction-{{ loop.index }}" class="form-check-label custom-checkbox-label">
+                            <i class="fas fa-angle-right text-primary me-2"></i> {{ step }}.
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Back to Recipes Button -->
+        <div class="text-center mt-5">
+            <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-arrow-left"></i> Back to Recipes
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

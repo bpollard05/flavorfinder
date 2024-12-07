@@ -1,0 +1,181 @@
+{% extends "template.html" %}
+
+{% block title %}
+My Favorite Recipes
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">My Favorite Recipes</h1>
+
+<div id="recipe-list" class="row">
+    <div class="container mt-4">
+        <div class="form-group">
+            <input type="text" id="search-bar" class="form-control" placeholder="Search through your favorite recipes...">
+        </div>
+    </div>
+    {% if favorites %}
+        {% for recipe in favorites %}
+            <div class="col-md-4 col-sm-6 col-12 mb-4 recipe-card" 
+                 data-title="{{ recipe.Title|lower }}" 
+                 data-ingredients="{{ recipe.Ingredients|default('')|lower }}"
+                 data-instructions="{{ recipe.Instructions|default('')|lower }}">
+                <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="text-decoration-none">
+                    <div class="card h-100 position-relative">
+                        <!-- Favorite Star Icon -->
+                        {% if user %}
+                            {% if recipe.id in user_favorites %}
+                                <span class="favorite-star position-absolute top-0 end-0 m-2">
+                                    <i class="fas fa-star text-warning favorite-toggle" data-recipe-id="{{ recipe.id }}"></i>
+                                </span>
+                            {% else %}
+                                <span class="favorite-star position-absolute top-0 end-0 m-2">
+                                    <i class="far fa-star favorite-toggle" data-recipe-id="{{ recipe.id }}"></i>
+                                </span>
+                            {% endif %}
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title text-center">
+                                {{ recipe.Title }}
+                            </h5>
+                        </div>
+                        {% if recipe.Image_Name %}
+                            <img src="{{ url_for('static', filename='images/' ~ recipe.Image_Name) }}.jpg" class="card-img-bottom rounded" alt="{{ recipe.Title }}">
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center mt-4">You have no favorite recipes yet.</p>
+    {% endif %}
+</div>
+
+
+<div id="no-results-message" class="alert alert-warning mt-4" style="display: none;">
+    No recipes found.
+</div>
+
+<!-- Pagination Controls -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <!-- Previous Page Link -->
+        {% if page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('favorites', page=page - 1) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        
+        <!-- Page Numbers -->
+        {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {% if p == page %}active{% endif %}">
+                <a class="page-link" href="{{ url_for('favorites', page=p) }}">{{ p }}</a>
+            </li>
+        {% endfor %}
+        
+        <!-- Next Page Link -->
+        {% if page < total_pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('favorites', page=page + 1) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchBar = document.getElementById('search-bar');
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        const noResultsMessage = document.getElementById('no-results-message');
+
+        function filterFavorites() {
+            const query = searchBar.value.trim().toLowerCase();
+            let hasVisibleCards = false;
+
+            recipeCards.forEach(card => {
+                const title = card.getAttribute('data-title') || '';
+                const ingredients = card.getAttribute('data-ingredients') || '';
+                const instructions = card.getAttribute('data-instructions') || '';
+
+                const matches = title.includes(query) || ingredients.includes(query) || instructions.includes(query);
+
+                card.style.display = matches ? '' : 'none';
+                if (matches) hasVisibleCards = true;
+            });
+
+            noResultsMessage.style.display = hasVisibleCards ? 'none' : 'block';
+        }
+
+        searchBar.addEventListener('input', filterFavorites);
+        filterFavorites();
+
+        // Toggle favorite status
+        document.querySelectorAll('.favorite-toggle').forEach(star => {
+            star.addEventListener('click', function () {
+                const recipeId = this.getAttribute('data-recipe-id');
+                const isFavorited = this.classList.contains('fas');
+                const url = isFavorited ? '/remove_favorite' : '/add_favorite';
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ recipe_id: recipeId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (isFavorited) {
+                            // Remove from favorites
+                            this.classList.remove('fas', 'text-warning');
+                            this.classList.add('far');
+                            // Remove card from the favorites view
+                            this.closest('.recipe-card').remove();
+                            filterFavorites(); // Reapply filtering logic
+                        } else {
+                            // Add to favorites
+                            this.classList.remove('far');
+                            this.classList.add('fas', 'text-warning');
+                        }
+                    } else {
+                        alert('An error occurred while updating favorites.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating favorites.');
+                });
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const favoriteToggles = document.querySelectorAll('.favorite-toggle');
+        favoriteToggles.forEach(toggle => {
+            toggle.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default anchor behavior
+                event.stopPropagation(); // Prevent the event from bubbling to the card
+                const recipeId = this.getAttribute('data-recipe-id');
+                
+                // You can handle the favorite toggle logic here
+                console.log(`Favorite toggle clicked for recipe ID: ${recipeId}`);
+            });
+        });
+    });
+</script>
+{% endblock %}

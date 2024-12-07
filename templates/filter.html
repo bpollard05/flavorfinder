@@ -1,0 +1,247 @@
+{% extends "template.html" %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4">Search</h1>
+<form id="filters-form" method="post" action="{{ url_for('filter_view') }}">
+    <div class="container filters-container">
+        <h3><i class="fas fa-clipboard-list"></i> INGREDIENTS </h3>
+        <p class="text-muted">Specify ingredients and limits. We will filter recipes based on your preferences.</p>
+        <!-- Hidden input to track the total number of ingredient rows -->
+        <input type="hidden" id="total-ingredients" name="total_ingredients" value="{{ filters|length }}">
+        <div id="filters-container">
+            {% if filters %}
+                {% for filter in filters %}
+                    <div class="row align-items-center mb-3 filter-row" id="filter-row-{{ loop.index }}">
+                        <div class="col-md-4">
+                            <label for="ingredient{{ loop.index }}" class="form-label">Ingredient</label>
+                            <input type="text" class="form-control" id="ingredient{{ loop.index }}" name="ingredient{{ loop.index }}" placeholder="e.g., Flour" value="{{ filter.ingredient }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="amount{{ loop.index }}" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount{{ loop.index }}" name="amount{{ loop.index }}" min="0" step="1" placeholder="e.g., 100" value="{{ filter.amount }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="unit{{ loop.index }}" class="form-label">Unit</label>
+                            <select class="form-control" id="unit{{ loop.index }}" name="unit{{ loop.index }}">
+                                <option value="">Select a unit</option>
+                                <option value="grams" {% if filter.unit == 'grams' %}selected{% endif %}>Grams</option>
+                                <option value="kilograms" {% if filter.unit == 'kilograms' %}selected{% endif %}>Kilograms</option>
+                                <option value="milliliters" {% if filter.unit == 'milliliters' %}selected{% endif %}>Milliliters</option>
+                                <option value="liters" {% if filter.unit == 'liters' %}selected{% endif %}>Liters</option>
+                                <option value="cups" {% if filter.unit == 'cups' %}selected{% endif %}>Cups</option>
+                                <option value="tablespoons" {% if filter.unit == 'tablespoons' %}selected{% endif %}>Tablespoons</option>
+                                <option value="teaspoons" {% if filter.unit == 'teaspoons' %}selected{% endif %}>Teaspoons</option>
+                                <option value="ounces" {% if filter.unit == 'ounces' %}selected{% endif %}>Ounces</option>
+                                <option value="pounds" {% if filter.unit == 'pounds' %}selected{% endif %}>Pounds</option>
+                                <option value="pinch" {% if filter.unit == 'pinch' %}selected{% endif %}>Pinch</option>
+                                <option value="dash" {% if filter.unit == 'dash' %}selected{% endif %}>Dash</option>
+                                <option value="unit" {% if filter.unit == 'unit' %}selected{% endif %}>Unit</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            {% if loop.last %}
+                                <button type="button" class="btn btn-success add-filter" data-index="{{ loop.index }}">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-danger remove-filter" data-index="{{ loop.index }}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="row align-items-center mb-3 filter-row" id="filter-row-1">
+                    <div class="col-md-4">
+                        <label for="ingredient1" class="form-label">Ingredient</label>
+                        <input type="text" class="form-control" id="ingredient1" name="ingredient1" placeholder="e.g., Flour">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="amount1" class="form-label">Amount</label>
+                        <input type="number" class="form-control" id="amount1" name="amount1" min="0" step="0.1" placeholder="e.g., 100">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="unit1" class="form-label">Unit</label>
+                        <select class="form-control" id="unit1" name="unit1">
+                            <option value="">Select a unit</option>
+                            <option value="grams">Grams</option>
+                            <option value="kilograms">Kilograms</option>
+                            <option value="milliliters">Milliliters</option>
+                            <option value="liters">Liters</option>
+                            <option value="cups">Cups</option>
+                            <option value="tablespoons">Tablespoons</option>
+                            <option value="teaspoons">Teaspoons</option>
+                            <option value="ounces">Ounces</option>
+                            <option value="pounds">Pounds</option>
+                            <option value="pinch">Pinch</option>
+                            <option value="dash">Dash</option>
+                            <option value="unit">Unit</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-success add-filter" data-index="1">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <h3 class="mt-4"><i class="fas fa-leaf"></i> DIETARY RESTRICTIONS</h3>
+        <p class="text-muted">Select dietary restrictions you follow. We will ensure recipes comply.</p>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" name="dietary_restrictions" value="vegetarian" {% if 'vegetarian' in dietary_restrictions %}checked{% endif %}>
+                Vegetarian
+            </label>
+            <label>
+                <input type="checkbox" name="dietary_restrictions" value="vegan" {% if 'vegan' in dietary_restrictions %}checked{% endif %}>
+                Vegan
+            </label>
+            <label>
+                <input type="checkbox" name="dietary_restrictions" value="gluten-free" {% if 'gluten-free' in dietary_restrictions %}checked{% endif %}>
+                Gluten-Free
+            </label>
+            <label>
+                <input type="checkbox" name="dietary_restrictions" value="nut-free" {% if 'nut-free' in dietary_restrictions %}checked{% endif %}>
+                Nut-Free
+            </label>
+            <label>
+                <input type="checkbox" name="dietary_restrictions" value="dairy-free" {% if 'dairy-free' in dietary_restrictions %}checked{% endif %}>
+                Dairy-Free
+            </label>
+        </div>
+
+        <h3 class="mt-4"><i class="fas fa-blender"></i> UNAVAILABLE EQUIPMENT</h3>
+        <p class="text-muted">Specify unavailable equipment. We will exclude recipes requiring these tools.</p>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" name="unavailable_equipment" value="oven" {% if 'oven' in unavailable_equipment %}checked{% endif %}>
+                Oven
+            </label>
+            <label>
+                <input type="checkbox" name="unavailable_equipment" value="stove" {% if 'stove' in unavailable_equipment %}checked{% endif %}>
+                Stove
+            </label>
+            <label>
+                <input type="checkbox" name="unavailable_equipment" value="microwave" {% if 'microwave' in unavailable_equipment %}checked{% endif %}>
+                Microwave
+            </label>
+            <label>
+                <input type="checkbox" name="unavailable_equipment" value="blender" {% if 'blender' in unavailable_equipment %}checked{% endif %}>
+                Blender
+            </label>
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" name="action" value="save" class="btn btn-primary"> Save Selections </button>
+            <button type="submit" name="action" value="clear" class="btn btn-secondary">Clear All</button>        </div>
+    </div>
+</form>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const filtersForm = document.getElementById("filters-form");
+        const filtersContainer = document.getElementById("filters-container");
+        const totalIngredientsInput = document.getElementById("total-ingredients");
+        const clearFiltersButton = document.getElementById("clear-filters");
+        let filterIndex = document.querySelectorAll(".filter-row").length + 1; // Start from the next available index // Start from the current filters count or 1
+
+        // Function to update the total ingredient count
+        function updateTotalIngredients() {
+            const filterRows = document.querySelectorAll(".filter-row");
+            totalIngredientsInput.value = filterRows.length;
+            console.log(`Total ingredients updated: ${filterRows.length}`);
+        }
+
+        // Function to ensure there's always at least one empty ingredient row
+        function ensureOneEmptyRow() {
+            if (parseInt(totalIngredientsInput.value, 10) === 0) {
+                totalIngredientsInput.value = 1;
+            }
+        }
+
+        // Call ensureOneEmptyRow on page load
+        ensureOneEmptyRow();
+
+        // Function to add a new ingredient row
+        function addIngredientRow() {
+            const newRow = document.createElement("div");
+            newRow.classList.add("row", "align-items-center", "mb-3", "filter-row");
+            newRow.id = `filter-row-${filterIndex}`;
+            newRow.innerHTML = `
+                <div class="col-md-4">
+                    <label for="ingredient${filterIndex}" class="form-label">Ingredient</label>
+                    <input type="text" class="form-control" id="ingredient${filterIndex}" name="ingredient${filterIndex}" placeholder="e.g., Sugar">
+                </div>
+                <div class="col-md-3">
+                    <label for="amount${filterIndex}" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount${filterIndex}" name="amount${filterIndex}" min="0" step="0.1" placeholder="e.g., 200">
+                </div>
+                <div class="col-md-3">
+                    <label for="unit${filterIndex}" class="form-label">Unit</label>
+                    <select class="form-control" id="unit${filterIndex}" name="unit${filterIndex}">
+                        <option value="">Select a unit</option>
+                        <option value="grams">Grams</option>
+                        <option value="kilograms">Kilograms</option>
+                        <option value="milliliters">Milliliters</option>
+                        <option value="liters">Liters</option>
+                        <option value="cups">Cups</option>
+                        <option value="tablespoons">Tablespoons</option>
+                        <option value="teaspoons">Teaspoons</option>
+                        <option value="ounces">Ounces</option>
+                        <option value="pounds">Pounds</option>
+                        <option value="pinch">Pinch</option>
+                        <option value="dash">Dash</option>
+                        <option value="unit">Unit</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success add-filter" data-index="${filterIndex}">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            `;
+
+            // Update the last row's button to a remove button
+            const lastRowButton = filtersContainer.querySelector(".add-filter");
+            if (lastRowButton) {
+                lastRowButton.classList.replace("btn-success", "btn-danger");
+                lastRowButton.classList.replace("add-filter", "remove-filter");
+                lastRowButton.innerHTML = '<i class="fas fa-trash"></i>';
+            }
+
+            filtersContainer.appendChild(newRow);
+            filterIndex++;
+            updateTotalIngredients(); // Update count after adding a row
+        }
+
+        // Function to remove a specific row
+        function removeIngredientRow(button) {
+            const row = button.closest(".filter-row");
+            if (row) {
+                row.remove();
+                updateTotalIngredients(); // Update count after removing a row
+            }
+        }
+
+        // Event listener for "Add" and "Remove" buttons
+        filtersContainer.addEventListener("click", function (event) {
+            const addButton = event.target.closest(".add-filter");
+            const removeButton = event.target.closest(".remove-filter");
+
+            if (addButton) {
+                addIngredientRow();
+            } else if (removeButton) {
+                removeIngredientRow(removeButton);
+            }
+        });
+
+    });
+</script>
+{% endblock %}

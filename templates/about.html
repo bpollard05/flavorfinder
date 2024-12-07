@@ -1,0 +1,38 @@
+{% extends "template.html" %}
+
+{% block title %}About - Recipe Website{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <h1 class="text-center mb-4">About Us</h1>
+    <p class="text-muted text-center">
+        Welcome to the Recipe Website, where you can search, find, and save your favorite recipes. Whether you're an aspiring chef or just love cooking, this is the perfect platform for you!
+    </p>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3>Our Mission</h3>
+            <p>
+                Our mission is to bring together a community of food lovers to share and explore recipes from around the world. We aim to inspire creativity in the kitchen and make cooking fun and accessible for everyone.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>What We Offer</h3>
+            <ul>
+                <li>A vast collection of diverse recipes.</li>
+                <li>Tools to save and organize your favorite recipes.</li>
+                <li>Search and filter options to find recipes tailored to your dietary preferences and ingredients.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <p class="text-muted">
+            Recipes data used on this platform were sourced from the
+            <a href="https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images" target="_blank" class="text-decoration-none" style="color: #4CAF50;">
+                Food Ingredients and Recipe Dataset with Images
+            </a> on Kaggle. We express our gratitude to the contributors for providing such a comprehensive dataset.
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "template.html" %}
+
+{% block title %}
+Error
+{% endblock %}
+
+{% block content %}
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">{{ top }}</h4>
+    <p>{{ bottom }}</p>
+</div>
+<a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+{% endblock %}
